@@ -37,8 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'Front.apps.FrontConfig',
-    'Queen.apps.AppConfig',
+    'front.apps.FrontConfig'
 ]
 
 MIDDLEWARE = [
@@ -79,7 +78,7 @@ WSGI_APPLICATION = 'ClothingStore.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'bbs',
+        'NAME': 'store',
         'HOST': '140.143.223.211',
         'USER': 'root',
         'PASSWORD': '151611',
@@ -128,3 +127,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
+
+AUTH_USER_MODEL = 'front.Users'
+
+MDEIA_ROOT= os.path.join(BASE_DIR,'static/upload')

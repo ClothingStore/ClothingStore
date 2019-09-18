@@ -1,0 +1,129 @@
+{% extends 'front/base.html' %}
+	<!-- 顶部标题 -->
+{% block body %}
+	<div class="bgf5 clearfix">
+		<div class="top-user">
+			<div class="inner">
+				<a class="logo" href="{% url 'front:index' %}"><img src="/static/images/icons/logo.jpg" alt="花花公子" class="cover"></a>
+				<div class="title">个人中心</div>
+			</div>
+		</div>
+	</div>
+	<div class="content clearfix bgf5">
+		<section class="user-center inner clearfix">
+			<div class="pull-left bgf">
+				<a href="{% url 'front:welcome' %}" class="title">欢迎页</a>
+				<dl class="user-center__nav">
+					<dt>帐户信息</dt>
+					<a href="{% url 'front:udaisetting' %}"><dd class="active">个人资料</dd></a>
+					<a href=""><dd>积分平台</dd></a>
+					<a href="{% url 'front:address' %}"><dd>收货地址</dd></a>
+					<a href=""><dd>修改登录密码</dd></a>
+				</dl>
+				<dl class="user-center__nav">
+					<dt>订单中心</dt>
+					<a href="{% url 'front:userorder' %}"><dd>我的订单</dd></a>
+                    <a href=""><dd>我的收藏</dd></a>
+					<a href=""><dd>退款/退货</dd></a>
+				</dl>
+			</div>
+			<div class="pull-right">
+				<div class="user-content__box clearfix bgf">
+					<div class="title">账户信息-个人资料</div>
+					<div class="port b-r50" id="crop-avatar">
+						<div class="img"><img src="{{ user.touxiang }}" class="cover b-r50"></div>
+					</div>
+					<form action="{% url 'front:udaisetting' %}"  method="post" class="user-setting__form" role="form">
+						{% csrf_token %}
+                        <div class="">
+							<label for="user-id">用户名：</label>
+							<input type="text" id="user-id" value="{{ user.first_name }}" placeholder="请输入您的昵称" name="firstname">
+						</div>
+						<div class="user-form-group">
+							<label>积分：</label>
+							{{ user.ex }}
+						</div>
+						<div class="user-form-group">
+							<label>性别：</label>
+							<label><input type="radio" name="sex" value="1" {% if user.sex == 1 %}checked{% endif %}><i class="iconfont icon-radio"></i> 男士</label>
+							<label><input type="radio" name="sex" value="2" {% if user.sex == 2 %}checked{% endif %}><i class="iconfont icon-radio"></i> 女士</label>
+							<label><input type="radio" name="sex" value="0" {% if user.sex == 0 %}checked{% endif %}><i class="iconfont icon-radio"></i> 保密</label>
+						</div>
+						<div class="user-form-group">
+							<label>生日：</label>
+							<label><input type="text" class="datepicker" value="{{ user.birthday }}" placeholder="请选择您的出生日期" name="birthday"></label>
+						</div>
+						<div class="user-form-group">
+							<input type="submit" class="btn" name="基本信息" value="确认修改">
+						</div>
+					</form>
+					<script src="/static/js/zebra.datepicker.min.js"></script>
+					<link rel="stylesheet" href="/static/css/zebra.datepicker.css">
+					<script>
+						$('input.datepicker').Zebra_DatePicker({
+							default_position: 'below',
+							show_clear_date: false,
+							show_select_today: false,
+						});
+					</script>
+				</div>
+			</div>
+
+		</section>
+	</div>
+{% endblock %}
+	<!-- 头像选择模态框 -->
+{% block body1 %}
+	<link href="/static/css/cropper/cropper.min.css" rel="stylesheet">
+	<link href="/static/css/cropper/sitelogo.css" rel="stylesheet">
+	<script src="/static/js/cropper/cropper.min.js"></script>
+	<script src="/static/js/cropper/sitelogo.js"></script>
+	<div class="modal fade" id="avatar-modal">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<form class="" action="{% url 'front:udaisetting' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+					<div class="modal-header">
+						<button class="close" data-dismiss="modal" type="button">&times;</button>
+						<h4 class="modal-title" id="avatar-modal-label">更换头像</h4>
+					</div>
+					<div class="modal-body">
+						<div class="avatar-body">
+							<div class="avatar-upload">
+								<label>图片上传</label>
+								<input name="photo" type="file" style="height:23px; width:300px;" onchange="previewFile()">
+                            </div>
+							<div class="row">
+								<div class="col-md-9">
+									<div ><img  class="image" src="" ></div>
+								</div>
+							</div>
+							<div class="row avatar-btns">
+								<div class="col-md-3">
+									<input class="btn btn-success btn-block avatar-save" type="submit" name="修改头像" value="保存设置">
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="loading" aria-label="Loading" role="img" tabindex="-1"></div>
+   <script type="text/javascript">
+function previewFile() {
+ var preview = document.querySelector('img[class=image]');
+ var file  = document.querySelector('input[type=file]').files[0];
+ var reader = new FileReader();
+ reader.onloadend = function () {
+  preview.src = reader.result;
+ }
+ if (file) {
+  reader.readAsDataURL(file);
+ } else {
+  preview.src = "";
+ }
+}
+</script>
+{% endblock %}
+	<!-- 右侧菜单 -->

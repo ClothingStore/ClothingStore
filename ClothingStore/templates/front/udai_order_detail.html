@@ -1,0 +1,53 @@
+{% extends 'front/udai_order.html' %}
+{% block right %}
+<div class="pull-right">
+    <div class="user-content__box clearfix bgf">
+        <div class="title">订单中心</div>
+        <div class="order-info__box">
+            <div class="order-addr">收货人：<span class="c6">{% if orders.shouname %}{{ orders.shouname}}{% else %}未付款{% endif %}</span></div>
+            <div class="order-addr">联系方式：<span class="c6">{% if orders.shouphone %}{{ orders.shouphone}}{% else %}未付款{% endif %}</span></div>
+            <div class="order-addr">收货地址：<span class="c6">{% if orders.order_address %}{{ orders.order_address}}{% else %}未付款{% endif %}</span></div>
+            <div class="order-info">
+                订单信息
+                <table>
+                    <tr>
+                        <td>订单编号：{{ orders.ordernumber }}</td>
+                    </tr>
+                    <tr>
+                        <td>创建时间：{{ orders.creation_time }}</td>
+                        <td>付款时间：{% if orders.payment_time %}{{ orders.payment_time }}{% else %}未付款{% endif %}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="table-thead">
+                <div class="tdf3">商品</div>
+                <div class="tdf1">状态</div>
+                <div class="tdf1">数量</div>
+                <div class="tdf1">单价</div>
+                <div class="tdf1">总价</div>
+            </div>
+            <div class="order-item__list">
+                <div class="item">
+                    <div class="tdf3">
+                        <a href="item_show.html">
+                            <div class="img"><img src="{{ orders.cid.clothingdetail.preview1 }}" alt="" class="cover"></div>
+                            <div class="ep2 c6">{{ orders.cid.cname }}</div>
+                        </a>
+                        <div class="attr ep">{{ orders.cid.color }}</div>
+                    </div>
+                    <div class="tdf1">{% if orders.is_payment == 0 %}<a href="">未付款</a>{% elif orders.is_status == 0 %}待发货{% elif orders.is_status == 1 and orders.is_take == 0 %}待收货{% else %}已完成{% endif %}</div>
+                    <div class="tdf1">1</div>
+                    <div class="tdf1">￥{{ orders.cid.price }}</div>
+                    <div class="tdf1">￥{{ money }}</div>
+                </div>
+            </div>
+            <div class="price-total">
+                <div class="fz18 c6">总金额：<b class="cr">￥{{ money }}</b></div>
+                <div class="fz12 c9">（本单可获 <span class="c6">380</span> 积分）</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

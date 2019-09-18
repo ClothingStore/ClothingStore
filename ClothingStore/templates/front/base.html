@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    {% block link %}
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="/static/css/iconfont.css">
+    <link rel="stylesheet" href="/static/css/global.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/static/css/swiper.min.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    {% endblock %}
+    {% block script %}
+    <script src="/static/js/jquery.1.12.4.min.js" charset="UTF-8"></script>
+    <script src="/static/js/bootstrap.min.js" charset="UTF-8"></script>
+    <script src="/static/js/swiper.min.js" charset="UTF-8"></script>
+    <script src="/static/js/global.js" charset="UTF-8"></script>
+    <script src="/static/js/jquery.DJMask.2.1.1.js" charset="UTF-8"></script>
+    {% endblock %}
+    {% block title %}
+    <title>PlayBoy</title>
+    {% endblock %}
+</head>
+<body>
+{#顶部#}
+{% block headbody %}
+<div class="tab-header">
+    <div class="inner">
+        <div class="pull-left">
+            <div class="pull-left">嗨，欢迎来到<span class="cr">PlayBoy</span></div>
+        </div>
+        <div class="pull-right">
+            {% if not user.is_authenticated %}
+            <a href="{% url 'front:userlogin' %}"><span class="cr">登录</span></a>
+            <a href="{% url 'front:register' %}">注册</a>
+            {% else %}
+                <a href="{% url 'front:welcome' %}">{{ user.first_name }}</a>
+                <a href="{% url 'front:logout' %}">登出</a>
+            {% endif %}
+            <a href="udai_order.html">我的订单</a>
+            <a href="udai_integral.html">积分平台</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{#中间内容#}
+{% block body %}
+{% endblock %}
+{#导航#}
+{% block dh %}
+    {% if user.is_authenticated %}
+    	<div class="right-nav">
+		<ul class="r-with-gotop">
+			<li class="r-toolbar-item">
+				<a href="{% url 'front:welcome' %}" class="r-item-hd">
+					<i class="iconfont icon-user"></i>
+					<div class="r-tip__box"><span class="r-tip-text">用户中心</span></div>
+				</a>
+			</li>
+			<li class="r-toolbar-item">
+				<a href="" class="r-item-hd">
+					<i class="iconfont icon-cart" data-badge="9o"></i>
+					<div class="r-tip__box"><span class="r-tip-text">购物车</span></div>
+				</a>
+			</li>
+			<li class="r-toolbar-item">
+				<a href="" class="r-item-hd">
+					<i class="iconfont icon-aixin"></i>
+					<div class="r-tip__box"><span class="r-tip-text">我的收藏</span></div>
+				</a>
+			</li>
+			<li class="r-toolbar-item">
+				<a href="" class="r-item-hd">
+					<i class="iconfont icon-liaotian"></i>
+					<div class="r-tip__box"><span class="r-tip-text">联系客服</span></div>
+				</a>
+			</li>
+			<li class="r-toolbar-item to-top">
+				<i class="iconfont icon-top"></i>
+				<div class="r-tip__box"><span class="r-tip-text">返回顶部</span></div>
+			</li>
+		</ul>
+	</div>
+    {% endif %}
+{% endblock %}
+{#底部#}
+{% block footbody %}
+<div class="footer">
+    <div class="footer-tags">
+        <div class="tags-box inner">
+            <div class="tag-div">
+                <img src="/static/images/icons/footer_1.gif" alt="厂家直供">
+            </div>
+            <div class="tag-div">
+                <img src="/static/images/icons/footer_2.gif" alt="一件代发">
+            </div>
+            <div class="tag-div">
+                <img src="/static/images/icons/footer_3.gif" alt="美工活动支持">
+            </div>
+            <div class="tag-div">
+                <img src="/static/images/icons/footer_4.gif" alt="信誉认证">
+            </div>
+        </div>
+    </div>
+    <div class="footer-links inner">
+    </div>
+    <div class="copy-box clearfix">
+        <!-- 版权 -->
+        <p class="copyright">
+            © 2019-2020 www.niuxg.xyz 版权所有，并保留所有权利<br>
+            京icp备 19042030 2019-09-18
+
+        </p>
+    </div>
+</div>
+{% endblock %}
+{% block body1 %}
+{% endblock %}
+</body>
+</html>

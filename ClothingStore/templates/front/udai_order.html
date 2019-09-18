@@ -1,0 +1,297 @@
+{% extends 'front/base.html' %}
+<!-- 顶部标题 -->
+{% block body %}
+    <div class="bgf5 clearfix">
+        <div class="top-user">
+            <div class="inner">
+                <a class="logo" href="index.html"><img src="/static/images/icons/logo.jpg" alt="U袋网" class="cover"></a>
+                <div class="title">个人中心</div>
+            </div>
+        </div>
+    </div>
+    <div class="content clearfix bgf5">
+        <section class="user-center inner clearfix">
+            <div class="pull-left bgf">
+                <a href="{% url 'front:welcome' %}" class="title">欢迎页</a>
+                <dl class="user-center__nav">
+                    <dt>帐户信息</dt>
+                    <a href="{% url 'front:udaisetting' %}">
+                        <dd>个人资料</dd>
+                    </a>
+                    <a href="">
+                        <dd>积分平台</dd>
+                    </a>
+                    <a href="{% url 'front:address' %}">
+                        <dd>收货地址</dd>
+                    </a>
+                    <a href="">
+                        <dd>修改登录密码</dd>
+                    </a>
+                </dl>
+                <dl class="user-center__nav">
+                    <dt>订单中心</dt>
+                    <a href="{% url 'front:userorder' %}">
+                        <dd class="active">我的订单</dd>
+                    </a>
+                    <a href="">
+                        <dd>我的收藏</dd>
+                    </a>
+                    <a href="">
+                        <dd>退款/退货</dd>
+                    </a>
+                </dl>
+            </div>
+        {% block right %}
+            <div class="pull-right">
+                <div class="user-content__box clearfix bgf">
+                    <div class="title">订单中心-我的订单</div>
+                    <div class="order-list__box bgf">
+                        <div class="order-panel">
+                            <ul class="nav user-nav__title" role="tablist">
+                                <li role="presentation" class="nav-item active"><a href="#all" aria-controls="all"
+                                                                                   role="tab" data-toggle="tab">所有订单</a>
+                                </li>
+                                <li role="presentation" class="nav-item "><a href="#pay" aria-controls="pay" role="tab"
+                                                                             data-toggle="tab">待付款 <span
+                                        class="cr">{{ order_payment |length }}</span></a></li>
+                                <li role="presentation" class="nav-item "><a href="#emit" aria-controls="emit"
+                                                                             role="tab" data-toggle="tab">待发货 <span
+                                        class="cr">{{ order_status|length }}</span></a></li>
+                                <li role="presentation" class="nav-item "><a href="#take" aria-controls="take"
+                                                                             role="tab" data-toggle="tab">待收货 <span
+                                        class="cr">{{ order_take|length }}</span></a></li>
+                            </ul>
+
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane fade in active" id="all">
+                                    <table class="table text-center">
+                                        <tr>
+                                            <th width="380">商品信息</th>
+                                            <th width="85">单价</th>
+                                            <th width="85">数量</th>
+
+                                            <th width="120">交易状态</th>
+                                            <th width="120">交易操作</th>
+                                        </tr>
+                                        {% for o_all in order_all %}
+                                            <tr class="order-item">
+                                                <td>
+                                                    <label>
+                                                        <a href="udai_order_detail.html" class="num">
+                                                            订单号:{{ o_all.ordernumber }}
+                                                        </a>
+                                                        <div class="card">
+                                                            <div class="img"><img
+                                                                    src="{{ o_all.cid.clothingdetail.preview1 }}" alt=""
+                                                                    class="cover"></div>
+                                                            <div class="name ep2">{{ o_all.cid.cname }}</div>
+                                                            <div class="format">颜色分类：{{ o_all.cid.color }}
+                                                                尺码：{{ o_all.cid.size }}</div>
+                                                        </div>
+                                                    </label>
+                                                </td>
+                                                <td>{{ o_all.cid.price }}</td>
+                                                <td>{{ o_all.number }}</td>
+
+                                                <td class="state">
+                                                    <a class="but c6">{% if o_all.is_payment == 0 %}
+                                                        待付款 {% elif o_all.is_status == 0 %}
+                                                        待发货 {% elif o_all.is_take == 0 %}
+                                                        待收货 {% else %}已完成{% endif %} </a>
+                                                    <a href="{% url 'front:orderdetail' o_all.id %}" class="but c9">订单详情</a>
+                                                </td>
+                                                <td class="order">
+                                                    <div class="del"><span class="glyphicon glyphicon-trash"
+                                                                           aria-hidden="true"></span></div>
+                                                    {% if o_all.is_payment == 0 %}
+                                                        <a href="{% url 'front:parment' o_all.id %}" class="but but-primary">立即付款</a>
+                                                        <a href="" class="but c3">取消订单</a>
+                                                    {% elif o_all.is_status == 0 or o_all.is_take == 0 %}
+                                                        <a href="" class="but but-primary">确定收货</a>
+                                                        <a href="" class="but c3">退款/退货</a>
+                                                    {% elif o_all.is_take == 1 %}
+                                                        <a href="" class="but c3">退款/退货</a>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                        {% empty %}
+                                            <tr class="order-empty">
+                                                <td colspan='6'>
+                                                    <div class="empty-msg">最近没有任何订单，家里好像缺了点什么！<br><a
+                                                            href="{% url 'front:index' %}">要不瞧瞧去？</a></div>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                                <div role="tabpanel" class="tab-pane fade" id="pay">
+                                    <table class="table text-center">
+                                        <tr>
+                                            <th width="380">商品信息</th>
+                                            <th width="85">单价</th>
+                                            <th width="85">数量</th>
+
+                                            <th width="120">交易状态</th>
+                                            <th width="120">交易操作</th>
+                                        </tr>
+                                        {% for o_pay in order_payment %}
+                                            <tr class="order-item">
+                                                <td>
+                                                    <label>
+                                                        <a href="udai_order_detail.html" class="num">
+                                                            订单号:{{ o_pay.ordernumber }}
+                                                        </a>
+                                                        <div class="card">
+                                                            <div class="img"><img
+                                                                    src="{{ o_pay.cid.clothingdetail.preview1 }}" alt=""
+                                                                    class="cover"></div>
+                                                            <div class="name ep2">{{ o_pay.cid.cname }}</div>
+                                                            <div class="format">颜色分类：{{ o_pay.cid.color }}
+                                                                尺码：{{ o_all.cid.size }}</div>
+                                                        </div>
+                                                    </label>
+                                                </td>
+                                                <td>{{ o_pay.cid.price }}</td>
+                                                <td>{{ o_pay.number }}</td>
+
+                                                <td class="state">
+                                                    <a class="but c6">
+                                                        待付款</a>
+                                                        <a href="{% url 'front:orderdetail' o_pay.id %}" class="but c9">订单详情</a>
+                                                </td>
+                                                <td class="order">
+                                                    <div class="del"><span class="glyphicon glyphicon-trash"
+                                                                           aria-hidden="true"></span></div>
+                                                    <a href="{% url 'front:parment' o_pay.id %}" class="but but-primary">立即付款</a>
+                                                    <a href="" class="but c3">取消订单</a>
+
+                                                </td>
+                                            </tr>
+                                        {% empty %}
+                                            <tr class="order-empty">
+                                                <td colspan='6'>
+                                                    <div class="empty-msg">最近没有任何订单，家里好像缺了点什么！<br><a
+                                                            href="{% url 'front:index' %}">要不瞧瞧去？</a></div>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                                <div role="tabpanel" class="tab-pane fade" id="emit">
+                                    <table class="table text-center">
+                                        <tr>
+                                            <th width="380">商品信息</th>
+                                            <th width="85">单价</th>
+                                            <th width="85">数量</th>
+
+                                            <th width="120">交易状态</th>
+                                            <th width="120">交易操作</th>
+                                        </tr>
+                                        {% for o_sta in order_status %}
+                                            <tr class="order-item">
+                                                <td>
+                                                    <label>
+                                                        <a href="udai_order_detail.html" class="num">
+                                                            订单号:{{ o_sta.ordernumber }}
+                                                        </a>
+                                                        <div class="card">
+                                                            <div class="img"><img
+                                                                    src="{{ o_sta.cid.clothingdetail.preview1 }}" alt=""
+                                                                    class="cover"></div>
+                                                            <div class="name ep2">{{ o_sta.cid.cname }}</div>
+                                                            <div class="format">颜色分类：{{ o_sta.cid.color }}
+                                                                尺码：{{ o_sta.cid.size }}</div>
+                                                        </div>
+                                                    </label>
+                                                </td>
+                                                <td>{{ o_sta.cid.price }}</td>
+                                                <td>{{ o_sta.number }}</td>
+
+                                                <td class="state">
+                                                    <a class="but c6">
+                                                        待发货</a>
+                                                        <a href="{% url 'front:orderdetail' o_sta.id %}" class="but c9">订单详情</a>
+                                                </td>
+                                                <td class="order">
+                                                    <div class="del"><span class="glyphicon glyphicon-trash"
+                                                                           aria-hidden="true"></span></div>
+                                                    <a href="" class="but but-primary">确认收货</a>
+                                                    <a href="" class="but c3">退货/退款</a>
+
+                                                </td>
+                                            </tr>
+                                        {% empty %}
+                                            <tr class="order-empty">
+                                                <td colspan='6'>
+                                                    <div class="empty-msg">最近没有任何订单，家里好像缺了点什么！<br><a
+                                                            href="{% url 'front:index' %}">要不瞧瞧去？</a></div>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </table>
+
+                                </div>
+                                <div role="tabpanel" class="tab-pane fade" id="take">
+                                    <table class="table text-center">
+                                        <tr>
+                                            <th width="380">商品信息</th>
+                                            <th width="85">单价</th>
+                                            <th width="85">数量</th>
+
+                                            <th width="120">交易状态</th>
+                                            <th width="120">交易操作</th>
+                                        </tr>
+                                        {% for o_take in order_take %}
+                                            <tr class="order-item">
+                                                <td>
+                                                    <label>
+                                                        <a href="udai_order_detail.html" class="num">
+                                                            订单号:{{ o_take.ordernumber }}
+                                                        </a>
+                                                        <div class="card">
+                                                            <div class="img"><img
+                                                                    src="{{ o_take.cid.clothingdetail.preview1 }}" alt=""
+                                                                    class="cover"></div>
+                                                            <div class="name ep2">{{ o_take.cid.cname }}</div>
+                                                            <div class="format">颜色分类：{{ o_take.cid.color }}
+                                                                尺码：{{ o_take.cid.size }}</div>
+                                                        </div>
+                                                    </label>
+                                                </td>
+                                                <td>{{ o_take.cid.price }}</td>
+                                                <td>{{ o_take.number }}</td>
+
+                                                <td class="state">
+                                                    <a class="but c6">
+                                                        待发货</a>
+                                                        <a href="{% url 'front:orderdetail' o_take.id %}" class="but c9">订单详情</a>
+                                                </td>
+                                                <td class="order">
+                                                    <div class="del"><span class="glyphicon glyphicon-trash"
+                                                                           aria-hidden="true"></span></div>
+                                                    <a href="" class="but but-primary">确认收货</a>
+                                                    <a href="" class="but c3">退货/退款</a>
+
+                                                </td>
+                                            </tr>
+                                        {% empty %}
+                                            <tr class="order-empty">
+                                                <td colspan='6'>
+                                                    <div class="empty-msg">最近没有任何订单，家里好像缺了点什么！<br><a
+                                                            href="{% url 'front:index' %}">要不瞧瞧去？</a></div>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        {% endblock %}
+        </section>
+    </div>
+    <!-- 右侧菜单 -->
+{% endblock %}

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+	<meta charset="UTF-8">
+	<link rel="shortcut icon" href="favicon.ico">
+	<link rel="stylesheet" href="/static/css/iconfont.css">
+	<link rel="stylesheet" href="/static/css/global.css">
+	<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/static/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="/static/css/login.css">
+	<script src="/static/js/jquery.1.12.4.min.js" charset="UTF-8"></script>
+	<script src="/static/js/bootstrap.min.js" charset="UTF-8"></script>
+	<script src="/static/js/jquery.form.js" charset="UTF-8"></script>
+	<script src="/static/js/global.js" charset="UTF-8"></script>
+	<script src="/static/js/login.js" charset="UTF-8"></script>
+	<title>登录 / 注册</title>
+</head>
+<body>
+	<div class="public-head-layout container">
+		<a class="logo" href="index.html"><img src="/static/images/icons/logo.jpg" alt="U袋网" class="cover"></a>
+	</div>
+	<div style="background:url(/static/images/login_bg.jpg) no-repeat center center; ">
+		<div class="login-layout container">
+			<div class="form-box login">
+				<div class="tabs-nav">
+					<h2>欢迎登录U袋网平台</h2>
+				</div>
+				<div class="tabs_container">
+					<form class="tabs_form" action="{% url 'front:userlogin' %}" method="post" id="login_form">
+                        {% csrf_token %}
+						<div class="form-group">
+							<div class="input-group">
+								<div class="input-group-addon">
+									<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
+								</div>
+								<input class="form-control phone" name="phone" id="login_phone" required placeholder="手机号" maxlength="11" autocomplete="off" type="text">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-group">
+								<div class="input-group-addon">
+									<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+								</div>
+								<input class="form-control password" name="password" id="login_pwd" placeholder="请输入密码" autocomplete="off" type="password">
+								<div class="input-group-addon pwd-toggle" title="显示密码"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></div>
+							</div>
+						</div>
+						<div class="checkbox">
+	                        <label>
+	                        <i></i>
+	                        </label>
+	                        <a href="javascript:;" class="pull-right" id="resetpwd">忘记密码？</a>
+	                    </div>
+	                    <!-- 错误信息 -->
+						<div class="form-group">
+							<div class="error_msg" id="login_error">
+
+								{% if form.phone.errors or form.password.errors or forms.phone.errors %}
+								<div class="alert alert-warning alert-dismissible fade in" role="alert">
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									<strong>{{ form.phone.errors }}</strong>
+                                    <strong>{{ form.password.errors }}</strong>
+                                    <strong>{{ forms.phone.errors }}</strong>
+								</div>
+								{% endif %}
+
+							</div>
+						</div>
+	                    <input value="登录" class="btn btn-large btn-primary btn-lg btn-block submit" id="login_submit" type="submit">
+                        <div style="height: 20px;"></div>
+	                    <p class="text-center">没有账号？<a href="javascript:;" id="register">免费注册</a></p>
+                    </form>
+                    <div class="tabs_div">
+	                    <div class="success-box">
+	                    	<div class="success-msg">
+								<i class="success-icon"></i>
+	                    		<p class="success-text">登录成功</p>
+	                    	</div>
+	                    </div>
+	                    <div class="option-box">
+	                    	<div class="buts-title">
+	                    		现在您可以
+	                    	</div>
+	                    	<div class="buts-box">
+	                    		<a role="button" href="index.html" class="btn btn-block btn-lg btn-default">继续访问商城</a>
+								<a role="button" href="udai_welcome.html" class="btn btn-block btn-lg btn-info">登录会员中心</a>
+	                    	</div>
+	                    </div>
+                    </div>
+                </div>
+			</div>
+			<div class="form-box register">
+  				<div class="tabs-nav">
+  					<h2>欢迎注册<a href="javascript:;" class="pull-right fz16" id="reglogin">返回登录</a></h2>
+  				</div>
+  				<div class="tabs_container">
+					<form class="tabs_form" action="{% url 'front:register' %}" method="post" id="register_form">
+                        {% csrf_token %}
+						<div class="form-group">
+							<div class="input-group">
+								<div class="input-group-addon">
+									<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
+								</div>
+								<input class="form-control phone" name="phone" id="register_phone" required placeholder="手机号" maxlength="11" autocomplete="off" type="text">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-group">
+								<div class="input-group-addon">
+									<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+								</div>
+								<input class="form-control password" name="password" id="register_pwd" placeholder="请输入密码" autocomplete="off" type="password">
+								<div class="input-group-addon pwd-toggle" title="显示密码"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></div>
+							</div>
+						</div>
+						<div class="checkbox">
+	                        <label>
+	                        	<input checked="" id="register_checkbox" type="checkbox"><i></i> 同意<a href="">用户协议</a>
+	                        </label>
+	                    </div>
+	                    <!-- 错误信息 -->
+						<div class="form-group">
+							<div class="error_msg" id="register_error"></div>
+						</div>
+	                    <input value="注册" class="btn btn-large btn-primary btn-lg btn-block submit" id="register_submit" type="submit">
+                    </form>
+                    {% csrf_token %}
+                    <div class="tabs_div">
+	                    <div class="success-box">
+	                    	<div class="success-msg">
+								<i class="success-icon"></i>
+	                    		<p class="success-text">注册成功</p>
+	                    	</div>
+	                    </div>
+	                    <div class="option-box">
+	                    	<div class="buts-title">
+	                    		现在您可以
+	                    	</div>
+	                    	<div class="buts-box">
+	                    		<a role="button" href="index.html" class="btn btn-block btn-lg btn-default">继续访问商城</a>
+								<a role="button" href="udai_welcome.html" class="btn btn-block btn-lg btn-info">登录会员中心</a>
+	                    	</div>
+	                    </div>
+                    </div>
+                </div>
+			</div>
+			<div class="form-box resetpwd">
+  				<div class="tabs-nav clearfix">
+  					<h2>找回密码<a href="javascript:;" class="pull-right fz16" id="pwdlogin">返回登录</a></h2>
+  				</div>
+  				<div class="tabs_container">
+					<form class="tabs_form" action="{% url 'front:register' %}" method="post" id="resetpwd_form">
+                        {% csrf_token %}
+						<div class="form-group">
+							<div class="input-group">
+								<div class="input-group-addon">
+									<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
+								</div>
+								<input class="form-control phone" name="phone" id="resetpwd_phone" required placeholder="手机号" maxlength="11" autocomplete="off" type="text">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-group">
+								<div class="input-group-addon">
+									<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+								</div>
+								<input class="form-control password" name="password" id="resetpwd_pwd" placeholder="新的密码" autocomplete="off" type="password">
+								<div class="input-group-addon pwd-toggle" title="显示密码"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></div>
+							</div>
+						</div>
+	                    <!-- 错误信息 -->
+						<div class="form-group">
+							<div class="error_msg" id="resetpwd_error"></div>
+						</div>
+	                    <button class="btn btn-large btn-primary btn-lg btn-block submit" id="resetpwd_submit" type="button">重置密码</button>
+                    </form>
+                    <div class="tabs_div">
+	                    <div class="success-box">
+	                    	<div class="success-msg">
+								<i class="success-icon"></i>
+	                    		<p class="success-text">密码重置成功</p>
+	                    	</div>
+	                    </div>
+	                    <div class="option-box">
+	                    	<div class="buts-title">
+	                    		现在您可以
+	                    	</div>
+	                    	<div class="buts-box">
+	                    		<a role="button" href="index.html" class="btn btn-block btn-lg btn-default">继续访问商城</a>
+								<a role="button" href="login.html" class="btn btn-block btn-lg btn-info">返回登陆</a>
+	                    	</div>
+	                    </div>
+                    </div>
+                </div>
+			</div>
+			<script>
+				$(document).ready(function() {
+					// 判断直接进入哪个页面 例如 login.php?p=register
+					switch($.getUrlParam('p')) {
+						case 'register': $('.register').show(); break;
+						case 'resetpwd': $('.resetpwd').show(); break;
+						default: $('.login').show();
+					};
+				});
+			</script>
+		</div>
+	</div>
+	<div class="footer-login container clearfix">
+
+		<!-- 版权 -->
+		<p class="copyright">
+			© 2019-2020 NXG 版权所有，并保留所有权利<br>
+
+		</p>
+	</div>
+</body>
+</html>
