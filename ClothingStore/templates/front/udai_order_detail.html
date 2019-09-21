@@ -36,7 +36,7 @@
                         <div class="attr ep">{{ orders.cid.color }}</div>
                     </div>
                     <div class="tdf1">{% if orders.is_payment == 0 %}<a href="">未付款</a>{% elif orders.is_status == 0 %}待发货{% elif orders.is_status == 1 and orders.is_take == 0 %}待收货{% else %}已完成{% endif %}</div>
-                    <div class="tdf1">1</div>
+                    <div class="tdf1">{{ orders.number }}</div>
                     <div class="tdf1">￥{{ orders.cid.price }}</div>
                     <div class="tdf1">￥{{ money }}</div>
                 </div>

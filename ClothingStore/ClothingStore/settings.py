@@ -131,3 +131,11 @@ STATICFILES_DIRS = [
 AUTH_USER_MODEL = 'front.Users'
 
 MDEIA_ROOT= os.path.join(BASE_DIR,'static/upload')
+
+
+LOGIN_URL = '/userlogin/'
+
+# 应用程序私匙
+APP_PRIVATE_KEY = open(os.path.join(BASE_DIR,'tools/app_private_key.pem')).read()
+ALIPAY_PUBLIC_KEY = open(os.path.join(BASE_DIR,'tools/alipay_public_key.pem')).read()
+APPID = "2016101400684024"

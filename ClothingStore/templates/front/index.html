@@ -2,6 +2,7 @@
 	<!-- 顶部tab -->
 {% block body %}
 	<!-- 搜索栏 -->
+    {% block top %}
 	<div class="top-search">
 		<div class="inner">
 			<a class="logo" href="{% url 'front:index' %}"><img src="/static/images/icons/logo.jpg" alt="U袋网" class="cover"></a>
@@ -15,11 +16,13 @@
 					</span>
 				</form>
 			</div>
+            {% if user.is_authenticated  %}
 			<div class="cart-box">
-				<a href="udai_shopcart.html" class="cart-but">
-					<i class="iconfont icon-shopcart cr fz16"></i> 购物车 0 件
+				<a href="{% url 'front:shopcat' %}" class="cart-but">
+					<i class="iconfont icon-shopcart cr fz16"></i> 购物车  {{ user.shopcat_set.all|length }} 件
 				</a>
 			</div>
+            {% endif %}
 		</div>
 	</div>
 	<!-- 首页导航栏 -->
@@ -36,7 +39,7 @@
 						<ul class="cat-list clearfix" >
                             {% for sma in small %}
                                 {% if sma.grade == section.sid %}
-							        <a href="" ><li style="color: white;font-size: 10px;">{{ sma.sname }}</li></a>
+							        <a href="{% url 'front:clothlist' %}?bcategory={{ section.sname }}&scategory={{ sma.sname }}" ><li style="color: white;font-size: 10px;">{{ sma.sname }}</li></a>
                                 {% endif %}
                             {% endfor %}
 						</ul>
@@ -45,9 +48,9 @@
 				</div>
 			</div>
 			<ul class="nva-list">
-				<a href="" ><li class="active" style="color: white;">首页</li></a>
+				<a href="{% url 'front:index' %}" ><li class="active" style="color: white;">首页</li></a>
                 {% for big in catory %}
-                    <a href="" ><li class="active" style="color: white">{{ big.sname }}</li></a>
+                    <a href="{% url 'front:clothlist' %}?bcategory={{ big.sname }}&scategory=全部" ><li class="active" style="color: white">{{ big.sname }}</li></a>
                 {% endfor %}
 			</ul>
         {% if user.is_authenticated %}
@@ -109,6 +112,7 @@
         {% endif %}
 		</div>
 	</div>
+    {% endblock %}
 	<!-- 顶部轮播 -->
     <div class="swiper-container banner-box">
         <div class="swiper-wrapper">

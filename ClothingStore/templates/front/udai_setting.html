@@ -24,7 +24,7 @@
 					<dt>订单中心</dt>
 					<a href="{% url 'front:userorder' %}"><dd>我的订单</dd></a>
                     <a href=""><dd>我的收藏</dd></a>
-					<a href=""><dd>退款/退货</dd></a>
+					<a href="{% url 'front:ordertui' %}?cha=1"><dd>退款/退货</dd></a>
 				</dl>
 			</div>
 			<div class="pull-right">

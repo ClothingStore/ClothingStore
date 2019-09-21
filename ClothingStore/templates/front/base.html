@@ -38,8 +38,13 @@
                 <a href="{% url 'front:welcome' %}">{{ user.first_name }}</a>
                 <a href="{% url 'front:logout' %}">登出</a>
             {% endif %}
-            <a href="udai_order.html">我的订单</a>
-            <a href="udai_integral.html">积分平台</a>
+            <a href="{% url 'front:userorder' %}">我的订单</a>
+            <a href="" onclick="box()">积分平台</a>
+            <script type="text/javascript">
+                function box() {
+                    alert('功能赞未开发');
+                }
+            </script>
         </div>
     </div>
 </div>
@@ -59,8 +64,8 @@
 				</a>
 			</li>
 			<li class="r-toolbar-item">
-				<a href="" class="r-item-hd">
-					<i class="iconfont icon-cart" data-badge="9o"></i>
+				<a href="{% url 'front:shopcat' %}" class="r-item-hd">
+					<i class="iconfont icon-cart" data-badge="{{ user.shopcat_set.all|length }}"></i>
 					<div class="r-tip__box"><span class="r-tip-text">购物车</span></div>
 				</a>
 			</li>

@@ -62,6 +62,8 @@ class Clothing(models.Model):
     price = models.FloatField(default=0.00)
     # 服装属于哪个版块
     sid = models.ForeignKey(Section, models.DO_NOTHING, db_column='sid', blank=True, null=True)
+    # 是否下架 0未不下架
+    is_del = models.IntegerField(default=0)
     class Meta:
         managed = True
         db_table = 'clothing'
@@ -78,6 +80,7 @@ class ClothingDetail(models.Model):
     detailed = models.CharField(max_length=255, null=True)
     # 模特图
     modeled = models.CharField(max_length=255, null=True)
+    problem = models.CharField(max_length=255, null=True)
     cid = models.OneToOneField(Clothing, models.DO_NOTHING, db_column='cid', unique=True, blank=True, null=True)
 
     class Meta:
@@ -88,9 +91,9 @@ class ShopCat(models.Model):
     uid = models.ForeignKey('Users', models.DO_NOTHING, db_column='uid', blank=True, null=True)
     cid = models.ForeignKey('Clothing', models.DO_NOTHING, db_column='cid', blank=True, null=True)
     # 商品数量
-    number = models.IntegerField(null=True)
+    number = models.IntegerField(null=True,default=1)
     # 商品总价格
-    money = models.FileField(null=True)
+    money = models.FloatField(null=True)
     class Meta:
         managed = True
         db_table = 'shopcat'
@@ -147,4 +150,32 @@ class Address(models.Model):
     class Meta:
         managed = True
         db_table = 'address'
+
+# 退货表
+class SalesReturn(models.Model):
+    # 申请单号
+    requestcode = models.CharField(max_length=16)
+    requesttime = models.DateTimeField(null=True)
+    # 申请类型
+    requesttype = models.IntegerField(default=0)
+    # 退款状态 0为未处理 1为已处理
+    state = models.IntegerField(default=0)
+    oid = models.ForeignKey('Order', models.DO_NOTHING, db_column='oid', blank=True, null=True)
+    uid = models.ForeignKey('Users', models.DO_NOTHING, db_column='uid', blank=True, null=True)
+    # 退款原因
+    cause = models.CharField(max_length=32,null=True)
+    # 退款备注
+    remark = models.CharField(max_length=255,null=True)
+    class Meta:
+        managed = True
+        db_table = 'salesreturn'
+
+
+
+class superuser(models.Model):
+    username= models.CharField(max_length=255)
+    password = models.CharField(max_length=8,default='123456')
+
+
+
 

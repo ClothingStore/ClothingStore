@@ -1,0 +1,33 @@
+{% extends 'front/udai_order.html' %}
+{% block right %}
+<div class="pull-right">
+				<div class="user-content__box clearfix bgf">
+					<div class="title">订单中心-申请退款/退货</div>
+					<div class="order-info__box">
+						<div class="step-flow-box" style="width: 800px;margin: 0 auto 24px">
+							<div class="step-flow__bd">
+								<div class="step-flow__li step-flow__li_done">
+									<div class="step-flow__state"><i class="iconfont icon-ok"></i></div>
+									<p class="step-flow__title-top">买家申请</p>
+								</div>
+								<div class="step-flow__line step-flow__line_ing">
+									<div class="step-flow__process"></div>
+								</div>
+								<div class="step-flow__li">
+									<div class="step-flow__state"><i class="iconfont icon-ok"></i></div>
+									<p class="step-flow__title-top">卖家处理</p>
+								</div>
+								<div class="step-flow__line">
+									<div class="step-flow__process"></div>
+								</div>
+								<div class="step-flow__li">
+									<div class="step-flow__state"><i class="iconfont icon-ok"></i></div>
+									<p class="step-flow__title-top">完毕</p>
+								</div>
+							</div>
+						</div>
+                        <p style="color: red;font-size: 20px;margin-left: 35%">申请成功 请耐心等待卖家处理</p>
+					</div>
+				</div>
+</div>
+{% endblock %}

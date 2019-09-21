@@ -2,6 +2,9 @@ import os
 from datetime import datetime
 from random import randint
 
+from ClothingStore.settings import MDEIA_ROOT
+from tools.uploads import uploads
+
 
 class FileUpload:
     def __init__(self, file, exts=['png', 'jpg', 'jpeg'], size=1024 * 1024, is_randomname=False):
@@ -38,6 +41,7 @@ class FileUpload:
         path = os.path.join(dest, self.file_name)
         # 5 保存文件
         self.write_file(path)
+        uploads(path)
         return 1
 
     def check_type(self):

@@ -27,6 +27,22 @@ urlpatterns = [
     url(r'orderdetail/(\d+)/',views.orderdetail,name='orderdetail'),
     # 付款
     url(r'parment/(\d+)/',views.parment,name='parment'),
+    # 收货
+    url(r'shou/(\d+)/',views.shouhuo,name='shouhuo'),
+    # 退款
+    url(r'ordertui/(\d+)/$',views.ordertui,name='ordertui'),
+    url(r'ordertui/$',views.ordertui,name='ordertui'),
+    url(r'yesorder/(\d+)/$',views.yesorder,name='yesorder'),
+    # 服装列表展示
+    url(r'clothlist/$',views.clothlist,name='clothlist'),
+    # 购物车
+    url(r'shopcat/$', views.shopcat, name='shopcat'),
+    # 添加购物车
+    # url(r'^addshop/(?P<action>\w+)/$',views.AddShop.as_view(),name='addshop'),
+    # 服装详情
+    url(r'clodetail/(\d+)/$', views.clodetail, name='clodetail'),
+
+
 
 
 
