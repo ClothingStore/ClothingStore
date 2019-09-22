@@ -1,0 +1,71 @@
+{% extends 'admin/base.html'%}
+{% block title %}
+    <title>会员详情</title>
+{% endblock title %}
+{% block body %}
+
+<section class="rt_wrap content mCustomScrollbar">
+ <div class="rt_content">
+      <div class="page_title">
+       <h2 class="fl">会员详情</h2>
+       <a href="{% url 'app:user_list' %}" class="fr top_rt_btn money_icon">返回用户列表</a>
+      </div>
+      <ul class="ulColumn2">
+       <li>
+        <span class="item_name" style="width:120px;">用户头像：</span>
+        <label class="uploadImg">
+            {% if data.touxiang %}
+        <img src="{{ data.touxiang }}" style="width: 200px; height: 200px">
+                {% else %}
+        <img src="/static/admin/images/mt.jpg" style="width: 200px; height: 200px">
+            {% endif %}
+        </label>
+       </li>
+       <li>
+        <span class="item_name" style="width:120px;">会员名称：</span>{{ data.first_name }}
+
+       </li>
+      <li>
+        <span class="item_name" style="width:120px;">会员积分：</span>{{ data.ex }}
+
+       </li>
+      <li>
+        <span class="item_name" style="width:120px;">性别：</span>{% if data.sex == 1%}男{% else %}女{% endif %}
+
+       </li>
+      <li>
+        <span class="item_name" style="width:120px;">会员生日：</span>{{ data.birthday }}
+
+       </li>
+
+       <li>
+        <span class="item_name" style="width:120px;">登陆密码：</span>********
+
+{#        <span class="errorTips">错误提示信息...</span>#}
+       </li>
+
+       <li>
+        <span class="item_name" style="width:120px;">电子邮箱：</span>{{ data.email }}
+
+{#        <span class="errorTips">错误提示信息...</span>#}
+       </li>
+       <li>
+        <span class="item_name" style="width:120px;">手机号码：</span>{{ data.phone }}
+
+       </li>
+
+
+
+       <li>
+        <span class="item_name" style="width:120px;">注册时间：</span>{{ data.date_joined }}
+
+       </li>
+
+       <li>
+        <span class="item_name" style="width:120px;">上次登录时间：</span>{{ data.last_login }}
+
+       </li>
+      </ul>
+ </div>
+</section>
+{% endblock %}

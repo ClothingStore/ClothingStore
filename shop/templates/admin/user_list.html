@@ -1,0 +1,50 @@
+{% extends 'admin/base.html'%}
+{% block title %}
+    <title>会员列表</title>
+{% endblock title %}
+{% block body %}
+
+<section class="rt_wrap content mCustomScrollbar">
+ <div class="rt_content">
+      <div class="page_title">
+       <h2 class="fl">会员列表</h2>
+
+      </div>
+
+      <table class="table">
+       <tr>
+        <th>Id</th>
+        <th>会员头像</th>
+        <th>会员昵称</th>
+        <th>会员账号</th>
+        <th>电子邮件</th>
+        <th>会员等级</th>
+        <th>操作</th>
+       </tr>
+          {% for data in datas %}
+       <tr>
+
+        <td class="center">{{ data.uid }}</td>
+           {% if data.touxiang %}
+        <td class="center"><img src="{{ data.touxiang }}" width="50" height="50"/></td>
+           {% else %}
+               <td class="center"><img src="/static/admin/images/mt.jpg" width="50" height="50"/></td>
+           {% endif %}
+        <td>{{ data.first_name }}</td>
+        <td class="center">{{ data.username }}</td>
+       {% if data.email %}
+        <td class="center">{{ data.email }}</td>
+           {% else %}
+           <td class="center">暂无</td>
+       {% endif %}
+        <td class="center">普通会员</td>
+        <td class="center">
+         <a href="{% url 'app:user_detail' data.uid %}" title="查看" class="link_icon">&#101;</a>
+        </td>
+       </tr>
+        {% endfor %}
+      </table>
+
+ </div>
+</section>
+{% endblock %}

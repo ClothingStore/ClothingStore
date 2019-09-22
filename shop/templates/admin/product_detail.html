@@ -1,0 +1,115 @@
+
+{% extends 'admin/base.html'%}
+{% block title %}
+    <title>商品详情</title>
+{% endblock title %}
+{% block body %}
+<section class="rt_wrap content mCustomScrollbar">
+ <div class="rt_content">
+      <div class="page_title">
+       <h2 class="fl">商品详情</h2>
+       <a class="fr top_rt_btn" href="{% url 'app:product_list' %}">返回产品列表</a>
+      </div>
+     <section>
+          <form action="{% url 'app:product_detail' data.cid %}" method="post" enctype="multipart/form-data">
+         {% csrf_token %}
+      <ul class="ulColumn2">
+       <li>
+        <span class="item_name" style="width:120px;">商品名称：</span>
+        <input type="text" class="textbox textbox_295" value="{{ data.cname }}" name="cname"/>
+
+       </li>
+       <li>
+        <span class="item_name" style="width:120px;">商品货号：</span>
+        <input type="text" class="textbox" value="{{ data.productid }}" name="ppid" />
+        <li>
+        <span class="item_name" style="width:120px;">商品数量：</span>
+        <input type="text" class="textbox textbox_295" value="{{ data.number }}" name="number"/>
+       </li>
+        <li>
+        <span class="item_name" style="width:120px;">颜色：</span>
+        <input type="text" class="textbox textbox_295" value="{{ data.color }}" name="color"/>
+       </li>
+        <li>
+        <span class="item_name" style="width:120px;">货码：</span>
+        <input type="text" class="textbox textbox_295" value="{{ data.size }}" name="size"/>
+       </li>
+      <li>
+        <span class="item_name" style="width:120px;">价格：</span>
+        <input type="text" class="textbox textbox_295" value="{{ data.price }}" name="price"/>
+       </li>
+       <li>
+       </li>
+       <li>
+
+       <span class="item_name" style="width:120px;">分类：</span>
+
+        <select class="select" name="fenlei">
+
+           {% for fl in fenlei %}
+            {% if fl.grade > 0 %}
+         <option value="{{ fl.sid }}">{{ fl.sname }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+       </li>
+
+       <li>
+        <span class="item_name" style="width:120px;">商品图片：</span>
+        <img src="{{ photo.preview1 }}" style="height: 120px"; width="120px"  >
+
+         <input type="file" name="p1"/>
+          <span class="item_name" style="width:120px;"></span>
+        <img src="{{ photo.preview2 }}" style="height: 120px"; width="120px"  >
+         <input type="file" name="p2"/><br>
+              <span class="item_name" style="width:120px;"></span>
+        <img src="{{ photo.preview3 }}" style="height: 120px;"width="120px"  >
+         <input type="file" name="p3"/>
+  <span class="item_name" style="width:120px;"></span>
+        <img src="{{ photo.preview4 }}" style="height: 120px;"width="120px"  >
+         <input type="file" name="p4"/><br>
+
+  <span class="item_name" style="width:120px;"></span>
+
+           <img src="{{ photo.preview5}}" style=" height: 120px";  width="120px"  >
+
+         <input type="file" name="p5"/>
+
+  <span class="item_name" style="width:120px;"></span>
+
+           <img src="{{ photo.drawing}}" style=" height: 120px";  width="120px"  >
+
+         <input type="file" name="p6"/><br>
+
+  <span class="item_name" style="width:120px;"></span>
+
+           <img src="{{ photo.detailed}}" style=" height: 120px";  width="120px"  >
+
+         <input type="file" name="p7"/>
+
+  <span class="item_name" style="width:120px;"></span>
+
+           <img src="{{ photo.modeled}}" style=" height: 120px";  width="120px"  >
+
+         <input type="file" name="p8"/>
+
+
+
+       </li>
+           <li>
+        <span class="item_name" style="width:120px;"></span>
+        <input type="submit" class="link_btn"/>
+       </li>
+
+
+      </ul>
+
+          </form>
+     </section>
+ </div>
+</section>
+
+</section>
+
+    
+{% endblock %}

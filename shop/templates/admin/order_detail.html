@@ -1,0 +1,55 @@
+{% extends 'admin/base.html'%}
+{% block title %}
+    <title>订单详情</title>
+{% endblock title %}
+{% block body %}
+
+<section class="rt_wrap content mCustomScrollbar">
+ <div class="rt_content">
+      <div class="page_title">
+       <h2 class="fl">订单详情</h2>
+       <a class="fr top_rt_btn" href="{% url 'app:order_list' %}">返回产品列表</a>
+      </div>
+      <table class="table">
+       <tr>
+        <td>订单号：{{ data.ordernumber }}</td>
+        <td>收件人：{{ data.shouname }}</td>
+        <td>联系电话：{{ data.shouphone}}</td>
+        <td>收件地址：{{ data.order_address }}</td>
+
+       </tr>
+       <tr>
+        <td>付款时间：{% if data.payment_time %}{{ data.payment_time }}{% else %}---{% endif %}</td>
+        <td>下单时间：{{ data.creation_time }}</td>
+        <td>物流：圆通快递</td>
+        <td>订单状态：{% if data.is_payment == 0 %}待付款{% elif data.is_payment == 1 and data.is_status == 0 %}待发货{% elif data.is_payment == 1 and data.is_status == 1 and data.is_take == 0 %}待收货{% else %}已收货{% endif %}</td>
+       </tr>
+
+      </table>
+      <table class="table">
+       <tr>
+        <td class="center"><img src="{{ clothing.clothingdetail_set.first.preview1 }}" width="50" height="50"/></td>
+        <td>{{ clothing.cname }}</td>
+        <td class="center">{{ clothing.productid }}</td>
+        <td class="center"><strong class="rmb_icon">{{ clothing.price }}</strong></td>
+        <td class="center">
+         <p>{{ clothing.color }}</p>
+         <p>{{ clothing.size }}</p>
+        </td>
+        <td class="center"><strong>{{ data.number }}</strong></td>
+        <td class="center"><strong class="rmb_icon">{% widthratio clothing.price 1 data.number %}</strong></td>
+
+       </tr>
+
+      </table>
+      <aside class="mtb" style="text-align:right; margin-top: 20px">
+          {% if data.is_payment == 1 and data.is_status == 0 %}
+            <label>管理员操作：</label>
+              <a href="{% url 'app:order_detail' data.id %}?is_take=1"   class="group_btn" style="align-content: center"><span style="align-content: center;height: 80px;line-height: 40px" >确认发货</span></a>
+
+          {% endif %}
+
+      </aside>
+ </div>
+</section>
+{% endblock %}

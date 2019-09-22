@@ -1,0 +1,243 @@
+{% extends 'admin/base.html'%}
+{% block title %}
+    <title>添加商品</title>
+{% endblock title %}
+{% block body %}
+
+<section class="rt_wrap content mCustomScrollbar">
+ <div class="rt_content">
+      <div class="page_title">
+       <h2 class="fl">添加商品</h2>
+       <a class="fr top_rt_btn">返回产品列表</a>
+      </div>
+     <section>
+         <form action="{% url 'app:add_product' %}" method="post"enctype="multipart/form-data">
+         {% csrf_token %}
+      <ul class="ulColumn2">
+       <li>
+        <span class="item_name" style="width:120px;">商品名称：</span>
+        <input type="text" class="textbox textbox_295" placeholder="商品名称..." name="cname"/>
+
+       </li>
+       <li>
+        <span class="item_name" style="width:120px;">商品货号：</span>
+        <input type="text" class="textbox" placeholder="商品货号..." name="ppid"/>
+
+       </li>
+
+       <li>
+        <span class="item_name" style="width:120px;">分类：</span>
+        <select class="select" name="fenlei">
+
+           {% for data in datas %}
+            {% if data.grade > 0 %}
+         <option value="{{ data.sid }}">{{ data.sname }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+       </li>
+          <li>
+        <span class="item_name" style="width:120px;">商品数量：</span>
+        <input type="text" class="textbox textbox_295" placeholder="商品数量..." name="number"/>
+       </li>
+        <li>
+        <span class="item_name" style="width:120px;">颜色：</span>
+        <input type="text" class="textbox textbox_295" placeholder="商品数量..." name="color"/>
+       </li>
+        <li>
+        <span class="item_name" style="width:120px;">货码：</span>
+        <input type="text" class="textbox textbox_295" placeholder="商品大小..." name="size"/>
+       </li>
+      <li>
+        <span class="item_name" style="width:120px;">价格：</span>
+        <input type="text" class="textbox textbox_295" placeholder="商品价格.." name="price"/>
+       </li>
+       <li>
+        <span class="item_name" style="width:120px;">上传图片：</span>
+        <label>
+         <span>预览图1</span>
+            <input type="file" name="p1"/>
+        </label>
+        </li>
+      <li>
+
+        <label>
+        <span class="item_name" style="width:120px;"></span>
+         <span>预览图2</span>
+            <input type="file" name="p2"/>
+        </label>
+        </li>
+      <li>
+
+        <label>
+        <span class="item_name" style="width:120px;"></span>
+         <span>预览图3</span>
+            <input type="file" name="p3"/>
+        </label>
+        </li>
+      <li>
+
+        <label>
+        <span class="item_name" style="width:120px;"></span>
+         <span>预览图4</span>
+            <input type="file" name="p4"/>
+        </label>
+        </li>
+      <li>
+
+        <label>
+        <span class="item_name" style="width:120px;"></span>
+         <span>预览图5</span>
+            <input type="file" name="p5"/>
+        </label>
+        </li>
+      <li>
+        <span class="item_name" style="width:120px;"></span>
+        <label>
+
+         <span>产品图</span>
+            <input type="file" name="p6"/>
+        </label>
+        </li>
+      <li>
+        <span class="item_name" style="width:120px;"></span>
+        <label>
+
+         <span>细节图</span>
+            <input type="file" name="p7"/>
+        </label>
+        </li>
+      <li>
+        <span class="item_name" style="width:120px;"></span>
+        <label>
+
+         <span>模特图</span>
+            <input type="file" name="p8"/>
+        </label>
+        </li>
+
+       <li>
+        <span class="item_name" style="width:120px;"></span>
+        <input type="submit" class="link_btn"/>
+       </li>
+      </ul>
+     </form>
+     </section>
+ </div>
+</section>
+<script src="/static/admin/js/ueditor.config.js"></script>
+<script src="/static/admin/js/ueditor.all.min.js"> </script>
+<script type="text/javascript">
+
+    //实例化编辑器
+    //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
+    var ue = UE.getEditor('editor');
+
+
+    function isFocus(e){
+        alert(UE.getEditor('editor').isFocus());
+        UE.dom.domUtils.preventDefault(e)
+    }
+    function setblur(e){
+        UE.getEditor('editor').blur();
+        UE.dom.domUtils.preventDefault(e)
+    }
+    function insertHtml() {
+        var value = prompt('插入html代码', '');
+        UE.getEditor('editor').execCommand('insertHtml', value)
+    }
+    function createEditor() {
+        enableBtn();
+        UE.getEditor('editor');
+    }
+    function getAllHtml() {
+        alert(UE.getEditor('editor').getAllHtml())
+    }
+    function getContent() {
+        var arr = [];
+        arr.push("使用editor.getContent()方法可以获得编辑器的内容");
+        arr.push("内容为：");
+        arr.push(UE.getEditor('editor').getContent());
+        alert(arr.join("\n"));
+    }
+    function getPlainTxt() {
+        var arr = [];
+        arr.push("使用editor.getPlainTxt()方法可以获得编辑器的带格式的纯文本内容");
+        arr.push("内容为：");
+        arr.push(UE.getEditor('editor').getPlainTxt());
+        alert(arr.join('\n'))
+    }
+    function setContent(isAppendTo) {
+        var arr = [];
+        arr.push("使用editor.setContent('欢迎使用ueditor')方法可以设置编辑器的内容");
+        UE.getEditor('editor').setContent('欢迎使用ueditor', isAppendTo);
+        alert(arr.join("\n"));
+    }
+    function setDisabled() {
+        UE.getEditor('editor').setDisabled('fullscreen');
+        disableBtn("enable");
+    }
+
+    function setEnabled() {
+        UE.getEditor('editor').setEnabled();
+        enableBtn();
+    }
+
+    function getText() {
+        //当你点击按钮时编辑区域已经失去了焦点，如果直接用getText将不会得到内容，所以要在选回来，然后取得内容
+        var range = UE.getEditor('editor').selection.getRange();
+        range.select();
+        var txt = UE.getEditor('editor').selection.getText();
+        alert(txt)
+    }
+
+    function getContentTxt() {
+        var arr = [];
+        arr.push("使用editor.getContentTxt()方法可以获得编辑器的纯文本内容");
+        arr.push("编辑器的纯文本内容为：");
+        arr.push(UE.getEditor('editor').getContentTxt());
+        alert(arr.join("\n"));
+    }
+    function hasContent() {
+        var arr = [];
+        arr.push("使用editor.hasContents()方法判断编辑器里是否有内容");
+        arr.push("判断结果为：");
+        arr.push(UE.getEditor('editor').hasContents());
+        alert(arr.join("\n"));
+    }
+    function setFocus() {
+        UE.getEditor('editor').focus();
+    }
+    function deleteEditor() {
+        disableBtn();
+        UE.getEditor('editor').destroy();
+    }
+    function disableBtn(str) {
+        var div = document.getElementById('btns');
+        var btns = UE.dom.domUtils.getElementsByTagName(div, "button");
+        for (var i = 0, btn; btn = btns[i++];) {
+            if (btn.id == str) {
+                UE.dom.domUtils.removeAttributes(btn, ["disabled"]);
+            } else {
+                btn.setAttribute("disabled", "true");
+            }
+        }
+    }
+    function enableBtn() {
+        var div = document.getElementById('btns');
+        var btns = UE.dom.domUtils.getElementsByTagName(div, "button");
+        for (var i = 0, btn; btn = btns[i++];) {
+            UE.dom.domUtils.removeAttributes(btn, ["disabled"]);
+        }
+    }
+
+    function getLocalData () {
+        alert(UE.getEditor('editor').execCommand( "getlocaldata" ));
+    }
+
+    function clearLocalData () {
+        UE.getEditor('editor').execCommand( "clearlocaldata" );
+        alert("已清空草稿箱")
+    }
+</script>
+{% endblock %}

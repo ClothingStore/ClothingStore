@@ -1,0 +1,53 @@
+{% extends 'admin/base.html'%}
+{% block title %}
+    <title>订单列表</title>
+{% endblock title %}
+{% block body %}
+
+<section class="rt_wrap content mCustomScrollbar">
+ <div class="rt_content">
+      <div class="page_title">
+       <h2 class="fl">订单列表</h2>
+
+      </div>
+      <section class="mtb">
+   <a href="{% url 'app:order_back' %}" style="font-size: larger">全部</a><span > &nbsp|</span>
+
+          <a href="{% url 'app:order_back' %}?is_back=1" style="font-size: larger">退货中</a><span > &nbsp|&nbsp</span>
+           <a href="{% url 'app:order_back' %}?is_back=2" style="font-size: larger">退货历史</a>
+
+
+      </section>
+      <table class="table">
+       <tr>
+        <th>订单编号</th>
+        <th>收件人</th>
+        <th>联系电话</th>
+        <th>收件人地址</th>
+        <th>订单状态</th>
+        <th>配送方式</th>
+        <th>操作</th>
+       </tr>
+        {% for data in datas %}
+       <tr>
+        <td class="center">{{ data.ordernumber }}</td>
+        <td>{{ data.shouname }}</td>
+        <td>{{ data.shouphone }}</td>
+        <td>
+         <address>{{ data.order_address }}</address>
+        </td>
+        <td class="center"><strong >{% if data.is_back == 1 %}退货中{% else %}已退货{% endif %}</strong></td>
+        <td class="center">圆通快递</td>
+        <td class="center">
+         <a href="{% url 'app:orderback_detail' data.id %}" title="处理订单" class="link_icon" >&#118;</a>
+
+        </td>
+       </tr>
+          {% endfor %}
+      </table>
+
+ </div>
+</section>
+{#</body>#}
+{#</html>#}
+{% endblock %}
